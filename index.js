@@ -1,14 +1,15 @@
 const http = require('node:http')
 const hostname = 'localhost'
 const port = 8080
-const fs = require('fs')
-const path = require('path')
+const EventEmitter = require('events')
+const chat = new EventEmitter()
 
-const filePath = path.join(__dirname,'data.txt')
+chat.on("message",(user,msg)=>{
+    console.log(`${user}:${msg}`)
+})
 
-fs.writeFileSync(filePath,"Hello Anh em")
-const content = fs.readFileSync(filePath,'utf-8')
-console.log("File content:", content);
+chat.emit("message","Alice","Hello")
+chat.emit("message","Bob","Hello Alice")
 const server = http.createServer((req,res)=>{
     res.statusCode = 200
     res.setHeader('Content-Type','text/plan')
