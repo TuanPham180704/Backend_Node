@@ -1,22 +1,26 @@
-const http = require('node:http')
-const hostname = 'localhost'
-const port = 8080
-const EventEmitter = require('events')
-const chat = new EventEmitter()
+const http = require("node:http");
+const fs = require("fs");
+const path = require("path");
+const port = 8080;
 
-chat.on("message",(user,msg)=>{
-    console.log(`${user}:${msg}`)
-})
+const server = http.createServer((req, res) => {
+  if (req.url === "/data") {
+    const filePath = path.join(__dirname, "data.json");
 
-chat.emit("message","Alice","Hello")
-chat.emit("message","Bob","Hello Alice")
-const server = http.createServer((req,res)=>{
-    res.statusCode = 200
-    res.setHeader('Content-Type','text/plan')
-    res.end('Hello Wolrd \n')
-})
+    fs.readFile(filePath, "utf8", (err, data) => {
+      if (err) {
+        res.writeHead(500);
+        return res.end("Error reading file");
+      }
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(data);
+    });
+  } else {
+    res.writeHead(404);
+    res.end("Not Found");
+  }
+});
 
-server.listen(port,hostname,()=>{
-    console.log(`Sever is running at http://${hostname}:${port}/`);
-    
-})
+server.listen(port, () => {
+  console.log(`Server is running http://localhost:${port}`);
+});
