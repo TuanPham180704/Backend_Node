@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.get("/users", (req, res) => res.json(users));
 app.get("/users/:id", (req, res) => {
-  const user = users.find((u) => u.id == req.params.id);
+  const user = users.filter((u) => u.id == req.params.id);
   user ? res.json(user) : res.status(404).json({ msg: "User not found" });
 });
 app.post("/users", (req, res) => {
@@ -34,8 +34,8 @@ app.put("/users/:id", (req, res) => {
   res.json(user);
 });
 app.delete("/users/:id", (req, res) => {
-  users = users.filter((u) => u.id != req.params.id);
-  res.json({ msg: "Delete" });
+  const user = users.filter((u) => u.id != req.params.id);
+  res.json({ msg: "Delete Success" });
 });
 app.listen(PORT, () => {
   console.log(`Server chạy tại http://localhost:${PORT}`);
