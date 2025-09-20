@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const logger = require("./middlewares/middleware");
 const PORT = process.env.PORT || 3000;
 
 let users = [
@@ -11,12 +12,15 @@ let users = [
 ];
 
 app.use(express.json());
-
+app.use(logger);
 // Route test
 app.get("/", (req, res) => {
   res.send("Hello Express 🚀");
 });
-
+app.use((req, res, next) => {
+  console.log("Time:", Date.now());
+  next();
+});
 app.get("/users", (req, res) => res.json(users));
 app.get("/users/:id", (req, res) => {
   const user = users.filter((u) => u.id == req.params.id);
