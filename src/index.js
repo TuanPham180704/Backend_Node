@@ -17,10 +17,6 @@ app.use(logger);
 app.get("/", (req, res) => {
   res.send("Hello Express 🚀");
 });
-app.use((req, res, next) => {
-  console.log("Time:", Date.now());
-  next();
-});
 app.get("/users", (req, res) => res.json(users));
 app.get("/users/:id", (req, res) => {
   const user = users.filter((u) => u.id == req.params.id);
