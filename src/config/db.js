@@ -4,8 +4,8 @@ const db = {
     { id: "2", name: "Nguyễn Văn A", email: "vana@example.com" },
   ],
   products: [
-    { id: "101", name: "Laptop Dell", price: 1500, image: null },
-    { id: "102", name: "Chuột Logitech", price: 25, image: null },
+    { id: "101", name: "Laptop Dell", price: 1500 },
+    { id: "102", name: "Chuột Logitech", price: 2500 },
   ],
 };
 
